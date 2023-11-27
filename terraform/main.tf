@@ -1,4 +1,4 @@
 provider "aws" {
   region = "eu-central-1"
-  profile = "maxizavr"
+  profile = var.aws_profile
 }
