@@ -1,2 +1,8 @@
 .terraform
 .terraform.lock.hcl
+terraform.tfvars
+terraform.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+terraform.tfstate.*
+plan.out
