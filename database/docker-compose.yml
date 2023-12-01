@@ -1,0 +1,21 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    env_file: .env
+    restart: unless-stopped
+    command:
+      - "--log_bin_trust_function_creators=1"
+      - "--lower_case_table_names=1"
+      - "--explicit_defaults_for_timestamp"
+    networks:
+      - docker_net
+    ports:
+      - 33306:3306
+    volumes:
+      - ./mysqldb:/docker-entrypoint-initdb.d
+      - ./mysql.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql_data:/var/lib/mysql
+networks:
+  docker_net:
+    driver: bridge
