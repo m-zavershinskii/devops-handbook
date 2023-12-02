@@ -1,0 +1,42 @@
+services:
+  mysql:
+    image: mysql:5.7.43
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+    env_file: ".env.${STACK}"
+    command:
+      - "--log_bin_trust_function_creators=1"
+      - "--lower_case_table_names=1"
+      - "--explicit_defaults_for_timestamp"
+    ports:
+      - ${MYSQL_EXPOSE_PORT}:3306
+    configs:
+      - source: mysql_config
+        target: /etc/mysql/conf.d/my.cnf
+      - source: mysql_init_script
+        target: /docker-entrypoint-initdb.d/init.sh
+    volumes:
+      - "/data/mysql/${STACK}:/var/lib/mysql"
+  postgres:
+    image: postgres:12.16-alpine
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+    env_file: ".env.${STACK}"
+    ports:
+      - ${POSTGRES_EXPOSE_PORT}:5432
+    configs:
+      - source: postgres_init_script
+        target: /docker-entrypoint-initdb.d/init.sh
+    volumes:
+      - "/data/postgres/${STACK}:/var/lib/postgresql/data"
+configs:
+  mysql_config:
+    file: ./mysql.cnf
+  mysql_init_script:
+    file: ./mysqldb/init.sh
+  postgres_init_script:
+    file: ./postgresdb/init.sh
