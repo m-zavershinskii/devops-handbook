@@ -17,6 +17,10 @@ services:
         target: /etc/mysql/conf.d/my.cnf
       - source: mysql_init_script
         target: /docker-entrypoint-initdb.d/init.sh
+      - source: patch_43_common
+        target: /opt/patch_43_common.sql
+      - source: patch_47_common
+        target: /opt/patch_47_common.sql
     volumes:
       - "/data/mysql/${STACK}:/var/lib/mysql"
   postgres:
@@ -38,5 +42,9 @@ configs:
     file: ./mysql.cnf
   mysql_init_script:
     file: ./mysqldb/init.sh
+  patch_43_common:
+    file: ./mysqldb/patch_43_common.sql
+  patch_47_common:
+    file: ./mysqldb/patch_47_common.sql
   postgres_init_script:
     file: ./postgresdb/init.sh
