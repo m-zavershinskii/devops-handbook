@@ -16,28 +16,21 @@ variable "vpc_cidr_block" {
   nullable = false
 }
 
-variable "subnet_cidr_block" {
+variable "subnet_a_cidr_block" {
   type = string
+  default = "10.0.1.0/24"
   nullable = false
 }
 
-variable "online_us_instance_type" {
+variable "subnet_b_cidr_block" {
   type = string
+  default = "10.0.2.0/24"
   nullable = false
 }
 
-variable "online_eu_instance_type" {
+variable "subnet_c_cidr_block" {
   type = string
-  nullable = false
-}
-
-variable "online_us_private_ip" {
-  type = string
-  nullable = false
-}
-
-variable "online_eu_private_ip" {
-  type = string
+  default = "10.0.3.0/24"
   nullable = false
 }
 
@@ -52,12 +45,3 @@ variable "aws_eu_region" {
   default = "eu-central-1"
   nullable = false
 }
-
-variable "region_ami_map" {
-  type    = map(string)
-  default = {
-    us-east-1 = "ami-0fc5d935ebf8bc3bc",
-    eu-central-1 = "ami-06dd92ecc74fdfb36",
-  }
-}
-

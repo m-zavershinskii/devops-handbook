@@ -1,0 +1,13 @@
+#cloud-config
+disk_setup:
+  ${device_name}:
+    table_type: gpt
+    layout: true
+
+fs_setup:
+  - label: data
+    filesystem: ext4
+    device: ${device_name}
+
+mounts:
+  - ["LABEL=data", "/data1", "ext4", "defaults", "0", "2"]

@@ -1,8 +1,11 @@
 variable "vm_name" {}
 variable "vm_vpc" {}
-variable "vm_ami" {}
 variable "vm_type" {}
 variable "vm_key_pair" {}
 variable "vm_private_ip" {}
 variable "vm_subnet" {}
 variable "vm_internet_gateway" {}
+variable "vm_root_volume_size" {}
+variable "vm_data_volume_size" {}
+variable "vm_availability_zone" {}
+variable "vm_data_volume_device_name" {}
