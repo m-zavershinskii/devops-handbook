@@ -1,59 +1,57 @@
-resource "aws_key_pair" "test_key" {
-  key_name   = "test-key"
+resource "aws_key_pair" "us_key" {
+  provider = aws.us
+
+  key_name   = "us-key"
   public_key = file(var.pub_key_file)
+
   tags = {
-    Name = "test key"
+    Name = "us key"
   }
 }
 
-resource "aws_security_group" "allow_ssh" {
-  name        = "allow_ssh"
-  description = "Allow SSH inbound traffic"
-  vpc_id      = aws_vpc.test_vpc.id
+resource "aws_key_pair" "eu_key" {
+  provider = aws.eu
 
-  ingress {
-    description      = "SSH from anywhere"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-  }
+  key_name   = "eu-key"
+  public_key = file(var.pub_key_file)
 
   tags = {
-    Name = "allow ssh"
+    Name = "eu key"
   }
 }
 
-resource "aws_instance" "test_instance" {
-  ami           = "ami-06dd92ecc74fdfb36"
-  instance_type = var.instance_type
-  key_name = aws_key_pair.test_key.id
+module "online_us_vm" {
+  source = "./modules/vm_template"
 
-  private_ip = var.instance_private_ip
-  subnet_id  = aws_subnet.test_subnet.id
+  vm_name = "online_us"
+  vm_ami = var.region_ami_map[var.aws_us_region]
+  vm_type = var.online_us_instance_type
+  vm_key_pair = aws_key_pair.us_key.id
 
-  security_groups = [aws_security_group.allow_ssh.id]
+  vm_vpc = module.us_vpc.vpc_id
+  vm_subnet = module.us_vpc.subnet_id
+  vm_internet_gateway = module.us_vpc.igw_id
+  vm_private_ip = var.online_us_private_ip
 
-  tags = {
-    Name = "test instance"
+  providers = {
+    aws = aws.us
   }
 }
 
-resource "aws_eip" "test_elastic_ip" {
-  domain = "vpc"
+module "online_eu_vm" {
+  source = "./modules/vm_template"
 
-  instance                  = aws_instance.test_instance.id
-  associate_with_private_ip = var.instance_private_ip
-  depends_on                = [aws_internet_gateway.test_igw]
+  vm_name = "online_eu"
+  vm_ami = var.region_ami_map[var.aws_eu_region]
+  vm_type = var.online_eu_instance_type
+  vm_key_pair = aws_key_pair.eu_key.id
 
-  tags = {
-    Name = "test elastic ip"
+  vm_vpc = module.eu_vpc.vpc_id
+  vm_subnet = module.eu_vpc.subnet_id
+  vm_internet_gateway = module.eu_vpc.igw_id
+  vm_private_ip = var.online_eu_private_ip
+
+  providers = {
+    aws = aws.eu
   }
 }
