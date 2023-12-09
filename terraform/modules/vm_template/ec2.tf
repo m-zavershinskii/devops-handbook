@@ -74,7 +74,7 @@ resource "aws_instance" "instance" {
 #  user_data = templatefile("./modules/vm_template/cloud-init.yml", { device_name = var.vm_data_volume_device_name })
 
   tags = {
-    Name = var.vm_name
+    Name = "${var.vm_name} Virtual Machine"
   }
 }
 

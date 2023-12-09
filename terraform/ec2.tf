@@ -52,7 +52,7 @@ module "online_eu_vm" {
 
   vm_vpc = module.eu_vpc.vpc_id
   vm_internet_gateway = module.eu_vpc.igw_id
-  
+
   vm_subnet = module.eu_vpc.subnet_a_id
   vm_private_ip = "10.0.1.10"
   vm_availability_zone = "${var.aws_eu_region}a"

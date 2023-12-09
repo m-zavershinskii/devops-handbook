@@ -10,4 +10,4 @@ fs_setup:
     device: ${device_name}
 
 mounts:
-  - ["LABEL=data", "/data1", "ext4", "defaults", "0", "2"]
+  - ["LABEL=data", "/data", "ext4", "defaults", "0", "2"]
