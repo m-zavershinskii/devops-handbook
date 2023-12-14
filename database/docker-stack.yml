@@ -30,9 +30,14 @@ services:
         constraints:
           - node.role == manager
     env_file: ".env.${STACK}"
+    command:
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
     ports:
       - ${POSTGRES_EXPOSE_PORT}:5432
     configs:
+      - source: postgres_config
+        target: /etc/postgresql/postgresql.conf
       - source: postgres_init_script
         target: /docker-entrypoint-initdb.d/init.sh
     volumes:
@@ -46,5 +51,7 @@ configs:
     file: ./mysqldb/patch_43_common.sql
   patch_47_common:
     file: ./mysqldb/patch_47_common.sql
+  postgres_config:
+    file: ./postgresdb/postgresql.conf
   postgres_init_script:
     file: ./postgresdb/init.sh
