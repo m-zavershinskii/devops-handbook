@@ -17,3 +17,7 @@ output "subnet_c_id" {
 output "igw_id" {
   value = aws_internet_gateway.igw.id
 }
+
+output "rtb_id" {
+  value = aws_vpc.vpc.default_route_table_id
+}
