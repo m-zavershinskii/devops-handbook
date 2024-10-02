@@ -38,7 +38,7 @@ resource "aws_key_pair" "eu_key" {
 #    aws = aws.eu
 #  }
 #}
-#
+
 #module "sandbox2_vm" {
 #  source = "./modules/vm_template"
 #

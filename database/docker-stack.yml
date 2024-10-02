@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:5.7.43
+    image: mysql:${MYSQL_VERSION}
     deploy:
       placement:
         constraints:
@@ -24,7 +24,7 @@ services:
     volumes:
       - "/data/mysql/${STACK}:/var/lib/mysql"
   postgres:
-    image: postgres:12.16-alpine
+    image: postgres:${POSTGRES_VERSION}
     deploy:
       placement:
         constraints:
