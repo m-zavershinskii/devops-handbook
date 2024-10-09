@@ -1,0 +1,13 @@
+# /etc/rancher/k3s/config.yaml
+flannel-backend: "none"
+disable-kube-proxy: true
+disable-network-policy: true
+token: "K10722f963c6e5864462d0402bb22e22f7a045379b2a67e04f6314d6ff952eda1a9::server:a944d292581777ea69e21ceadec8c1ea"
+server: "https://192.168.222.74:6443"
+#cluster-init: true
+tls-san:
+  - 192.168.222.66
+disable:
+  - servicelb
+  - traefik
+default-local-storage-path: /data
