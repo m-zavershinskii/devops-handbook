@@ -2,6 +2,7 @@
 #collation_server = utf8mb4_unicode_ci
 #character_set_server = utf8mb4
 explicit_defaults_for_timestamp
+performance_schema = OFF
 
 key_buffer_size = 16M
 max_allowed_packet = 1024M
@@ -10,8 +11,7 @@ max_allowed_packet = 1024M
 
 #query_cache_limit = 1M
 #query_cache_size = 16M
-#expire_logs_days = 7
-binlog_expire_logs_seconds = 30
+expire_logs_days = 7
 max_binlog_size = 10M
 
 lower_case_table_names = 1

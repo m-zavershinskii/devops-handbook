@@ -1,11 +1,13 @@
 services:
   mysql:
     image: mysql:${MYSQL_VERSION}
+    labels:
+      - instance=mysql_${WORK_ENV}
     deploy:
       placement:
         constraints:
           - node.role == manager
-    env_file: ".env.${STACK}"
+    env_file: ".env.${WORK_ENV}"
     command:
       - "--log_bin_trust_function_creators=1"
       - "--lower_case_table_names=1"
@@ -22,14 +24,16 @@ services:
       - source: patch_47_common
         target: /opt/patch_47_common.sql
     volumes:
-      - "/data/mysql/${STACK}:/var/lib/mysql"
+      - "/data/mysql/${WORK_ENV}:/var/lib/mysql"
   postgres:
     image: postgres:${POSTGRES_VERSION}
+    labels:
+      - instance=postgres_${WORK_ENV}
     deploy:
       placement:
         constraints:
           - node.role == manager
-    env_file: ".env.${STACK}"
+    env_file: ".env.${WORK_ENV}"
     command:
       - "-c"
       - "config_file=/etc/postgresql/postgresql.conf"
@@ -41,7 +45,8 @@ services:
       - source: postgres_init_script
         target: /docker-entrypoint-initdb.d/init.sh
     volumes:
-      - "/data/postgres/${STACK}:/var/lib/postgresql/data"
+      - "/data/postgres/${WORK_ENV}:/var/lib/postgresql/data"
+      # - "/data/backup/postgres/${WORK_ENV}:/backup"
 configs:
   mysql_config:
     file: ./mysql.cnf
