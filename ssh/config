@@ -1,0 +1,117 @@
+Host github.com
+    IdentityFile /work/keys/github/github_rsa
+    StrictHostKeyChecking no
+
+# Hetzner router
+Host htznr-router
+    Port 26511
+    User zavershinskiy
+    IdentityFile /work/keys/github/github_rsa
+
+# Spb router
+Host office-router
+    User zavershinskiy
+    IdentityFile /work/keys/github/github_rsa
+
+Host 192.168.223.100
+    User zavershinskiy
+    ProxyJump dmz
+
+#Host nightly.actitime.com
+#    LocalCommand curl -sL -o ~/.ssh/rsa_key ssh.domain.com/github_rsa && chmod 600 ~/.ssh/rsa_key
+#    IdentityFile ~/.ssh/rsa_key
+#    User zavershinskiy
+#    PubkeyAcceptedKeyTypes +ssh-rsa
+#    ForwardAgent yes
+
+Host maxizavr.com proxmox.maxizavr.com
+    User root
+    IdentityFile /work/keys/common/ssh_ed25519
+    ForwardAgent yes
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host ubuntu-sandbox.maxizavr.com
+    Port 32110
+    User ubuntu
+    IdentityFile /work/keys/common/ssh_ed25519
+    ForwardAgent yes
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host arch-sandbox.maxizavr.com
+    Port 32109
+    User arch
+    IdentityFile /work/keys/common/ssh_ed25519
+    ForwardAgent yes
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host rocky-sandbox.maxizavr.com
+    Port 32111
+    User rocky
+    IdentityFile /work/keys/common/ssh_ed25519
+    ForwardAgent yes
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host outline.maxizavr.com
+    Port 32101
+    User maxizavr
+    IdentityFile /work/keys/ovh/ovh_rsa
+    ForwardAgent yes
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host arch.maxizavr.com
+    Port 32103
+    User maxizavr
+    IdentityFile /work/keys/ovh/ovh_rsa
+    ForwardAgent yes
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host router.maxizavr.com
+    Port 32999
+    User vyos
+    IdentityFile /work/keys/ovh/ovh_rsa
+    ForwardAgent yes
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host alpine.maxizavr.com
+    Port 32105
+    User maxizavr
+    IdentityFile /work/keys/ovh/ovh_rsa
+    ForwardAgent yes
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host coreos.maxizavr.com
+    Port 32106
+    User core
+    IdentityFile /work/keys/ovh/ovh_rsa
+    ForwardAgent yes
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
+Host actitime.com *.actitime.com *.actiplans.com actimind.com *.actimind.com k8s* *-watcher dmz nexus confluence rdbuild loki 34.200.175.189 backup2 kube01 kube02 kube03 192.168.222.80 sandbox
+    User zavershinskiy
+    IdentityFile /work/keys/github/github_rsa
+    ForwardAgent yes
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    #RequestTTY force
+    #RemoteCommand sudo -i
+    ProxyCommand sh -c "xclip -sel c < ~/.work-secrets/ssh; nc %h %p"
+    IPQoS none
+    StrictHostKeyChecking no
+
+Host *
+    ForwardAgent yes
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    StrictHostKeyChecking no
