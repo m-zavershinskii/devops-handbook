@@ -37,7 +37,6 @@ mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "ALTER USER '${USER_MYSQL_DBTEMPLATE}'@
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON \`dbtemplate\`.* TO '${USER_MYSQL_DBTEMPLATE}'@'%' WITH GRANT OPTION;";
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "GRANT PROCESS ON *.* TO '${USER_MYSQL_DBTEMPLATE}'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;";
 
-
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE camunda;"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE ${COMMON_DATABASE_NAME};"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE dbtemplate;"
@@ -45,3 +44,6 @@ mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE pws;"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE wordpress;"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE wordpress_ap;"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE holidays;"
+
+mysql ${COMMON_DATABASE_NAME} -uroot -p${MYSQL_ROOT_PASSWORD} -f < /opt/patch_43_common.sql
+mysql ${COMMON_DATABASE_NAME} -uroot -p${MYSQL_ROOT_PASSWORD} -f < /opt/patch_47_common.sql

@@ -1,0 +1,46 @@
+#---
+#apiVersion: storage.k8s.io/v1
+#kind: StorageClass
+#metadata:
+#  name: ebs-sc
+#  annotations:
+#    storageclass.kubernetes.io/is-default-class: "true"
+#provisioner: ebs.csi.aws.com
+#parameters:
+#  type: gp3
+#reclaimPolicy: Retain
+#volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-gp3-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ebs-sc
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-gp3
+spec:
+  containers:
+  - name: app
+    image: nginx:stable-alpine-slim
+    volumeMounts:
+    - name: persistent-storage
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: persistent-storage
+    persistentVolumeClaim:
+      claimName: ebs-gp3-claim
+
+
+#aws eks describe-cluster --region eu-central-1 --profile maxizavr --name eu-eks-cluster --query "cluster.identity.oidc.issuer" --output text
+#aws iam create-role --region eu-central-1 --profile maxizavr --role-name AmazonEKS_EBS_CSI_DriverRole --assume-role-policy-document file://"aws-ebs-csi-driver-trust-policy.json"
+#aws iam attach-role-policy --region eu-central-1 --profile maxizavr --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy --role-name AmazonEKS_EBS_CSI_DriverRole
+#aws eks create-addon --region eu-central-1 --profile maxizavr --cluster-name eu-eks-cluster --addon-name aws-ebs-csi-driver --service-account-role-arn arn:aws:iam::735917985133:role/AmazonEKS_EBS_CSI_DriverRole
