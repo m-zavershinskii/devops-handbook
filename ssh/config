@@ -55,6 +55,14 @@ Host rocky-sandbox.maxizavr.com
     SendEnv LC_*
     StrictHostKeyChecking no
 
+Host debian-sandbox.maxizavr.com
+    Port 32112
+    User debian
+    IdentityFile /work/keys/common/ssh_ed25519
+    ForwardAgent yes
+    SendEnv LC_*
+    StrictHostKeyChecking no
+
 Host outline.maxizavr.com
     Port 32101
     User maxizavr
