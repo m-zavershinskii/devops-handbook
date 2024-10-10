@@ -1,5 +1,5 @@
 Host github.com
-    IdentityFile /work/keys/github/github_rsa
+    IdentityFile /work/keys/github/github_ed25519
     StrictHostKeyChecking no
 
 # Hetzner router
