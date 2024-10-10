@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -exuo pipefail
+
 TEMPLATE_ID="${1}"
 VM_ID="${2}"
 VM_NAME="${3}"
@@ -14,4 +16,4 @@ qm clone ${TEMPLATE_ID} ${VM_ID} --name ${VM_NAME} -full -storage local
 qemu-img resize -f raw /var/lib/vz/images/${VM_ID}/vm-${VM_ID}-disk-0.raw ${VM_DISK_SIZE}
 
 # Set Memory and Cores
-qm set ${VM_ID} --core 2 --memory 2048 --net0 "bridge=vmbr2"
+qm set ${VM_ID} --core 2 --memory 2048

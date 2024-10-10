@@ -1,6 +1,9 @@
 #! /usr/bin/env bash
 
+# First of all download cloudinit image. For example,
 # wget -q https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+
+set -exuo pipefail
 
 VM_CLOUD_IMAGE="${1}"
 VM_ID="${2}"
