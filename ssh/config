@@ -1,17 +1,17 @@
 Host github.com
-    IdentityFile /work/keys/github/github_rsa
+    IdentityFile /work/keys/github/github_ed25519
     StrictHostKeyChecking no
 
 # Hetzner router
 Host htznr-router
     Port 26511
     User zavershinskiy
-    IdentityFile /work/keys/github/github_rsa
+    IdentityFile /work/keys/zavershinskiy_rsa
 
 # Spb router
 Host office-router
     User zavershinskiy
-    IdentityFile /work/keys/github/github_rsa
+    IdentityFile /work/keys/zavershinskiy_rsa
 
 Host 192.168.223.100
     User zavershinskiy
@@ -110,7 +110,7 @@ Host coreos.maxizavr.com
 
 Host actitime.com *.actitime.com *.actiplans.com actimind.com *.actimind.com k8s* *-watcher dmz nexus confluence rdbuild loki 34.200.175.189 backup2 kube01 kube02 kube03 192.168.222.80 sandbox
     User zavershinskiy
-    IdentityFile /work/keys/github/github_rsa
+    IdentityFile /work/keys/zavershinskiy_rsa
     ForwardAgent yes
     PubkeyAcceptedKeyTypes +ssh-rsa
     #RequestTTY force
